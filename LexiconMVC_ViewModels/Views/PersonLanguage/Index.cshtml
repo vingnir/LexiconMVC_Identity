@@ -1,0 +1,47 @@
+﻿@model IEnumerable<LexiconMVC_ViewModels.Models.PersonLanguage>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Languages</h1>
+
+<div class="row py-3 mb-5">
+    <div class="col">
+        <div class="btn btn-info btn-sm rounded-0">
+            <a asp-action="Create" asp-controller="PersonLanguage" class="p-2 text-black" style="text-decoration:none; color:white!important">Create new</a>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+
+            <th>
+                Language
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+            @item.Person.Name
+            </td>
+    
+            <td>
+                @item.Language.LanguageName
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.PersonId">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
