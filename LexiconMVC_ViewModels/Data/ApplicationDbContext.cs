@@ -6,6 +6,7 @@ using LexiconMVC_ViewModels.Models;
 using Microsoft.EntityFrameworkCore;
 using LexiconMVC_ViewModels.Models.ViewModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace LexiconMVC_ViewModels.Models.Data
 {
@@ -22,8 +23,7 @@ namespace LexiconMVC_ViewModels.Models.Data
         {
             base.OnModelCreating(modelBuilder); //Recommend on the first line inside method.
 
-            //#region PersonLanguage Join Class Config
-
+            
             modelBuilder.Entity<PersonLanguage>().HasKey(pl => new { pl.PersonId, pl.LanguageId });
 
             modelBuilder.Entity<PersonLanguage>()
@@ -60,7 +60,46 @@ namespace LexiconMVC_ViewModels.Models.Data
             modelBuilder.Entity<Language>().HasData(new Language { LanguageId = 126, LanguageName = "Finnish" });
             modelBuilder.Entity<Language>().HasData(new Language { LanguageId = 127, LanguageName = "Esperanto" });
 
-          //  #endregion
+
+            string roleId = Guid.NewGuid().ToString();
+            string userRoleId = Guid.NewGuid().ToString();
+            string userId = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = roleId,
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+
+            });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = userRoleId,
+                Name = "User",
+                NormalizedName = "USER"
+
+            });
+
+            PasswordHasher<ApplicationUser> hasher = new PasswordHasher<ApplicationUser>();
+
+            modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
+            {
+                Id = userId,
+                Email = "admin@admin.com",
+                NormalizedEmail = "ADMIN@ADMIN.COM",
+                UserName = "admin@admin.com",
+                NormalizedUserName = "ADMIN@ADMIN.COM",
+                PasswordHash = hasher.HashPassword(null, "password"),
+                FirstName = "Donald",
+                LastName = "Duck",
+                BirthDate = "1934-06-09"
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = roleId,
+                UserId = userId
+            });
         }
 
         public DbSet<Person> People { get; set; }
