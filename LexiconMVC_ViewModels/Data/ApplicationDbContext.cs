@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using LexiconMVC_ViewModels.Models;
 using Microsoft.EntityFrameworkCore;
 using LexiconMVC_ViewModels.Models.ViewModels;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace LexiconMVC_ViewModels.Models.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -68,5 +68,6 @@ namespace LexiconMVC_ViewModels.Models.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<PersonLanguage> PersonLanguages { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
     }
 }
