@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "outputFile": "wwwroot/css/site.min.css",
     "inputFile": "wwwroot/scss/Site.scss"
@@ -6,5 +6,9 @@
   {
     "outputFile": "wwwroot/js/site.min.js",
     "inputFile": "wwwroot/js/Site.js"
+  },
+  {
+    "outputFile": "wwwroot/scss/_custom.style.css",
+    "inputFile": "wwwroot/scss/Site.scss"
   }
 ]

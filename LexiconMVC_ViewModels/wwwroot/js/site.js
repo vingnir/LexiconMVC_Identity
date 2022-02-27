@@ -1,7 +1,28 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
+//$(document).ready(showInitials());
+
+//function showInitials() {
+//    var uName = document.getElementById("manage").innerHTML;
+
+//    if (uName.length > 0) {
+       
+//        var initials = getFirstLetters(uName);
+//        document.getElementById("manage").innerHTML = initials;
+//    }
+    
+//}
+
+//function getFirstLetters(str) {
+//    const firstLetters = str
+//        .split(' ')
+//        .map(word => word[0])
+//        .join('');
+
+//    return firstLetters;
+//}
+
 $("#details").on('click', function () {
     var ID = $("#inputId").val(); //retrieve id from textbox with id
     console.log(ID);
