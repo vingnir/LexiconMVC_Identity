@@ -108,5 +108,7 @@ namespace LexiconMVC_ViewModels.Models.Data
         public DbSet<PersonLanguage> PersonLanguages { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
     }
 }

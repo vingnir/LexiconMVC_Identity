@@ -1,4 +1,4 @@
-﻿
+﻿@model CreateMessageViewModel
 @{
     ViewData["Title"] = "Contact";
 }
@@ -63,30 +63,31 @@
                                 <div id="form-message-success" class="mb-4">
                                     Your message was sent, thank you!
                                 </div>
-                                <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                <form method="post" asp-action="CreateMessage" asp-controller="Home" id="contactForm" class="contactForm">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="label" for="name">Full Name</label>
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                                                <label class="label" asp-for="FullName"></label>
+                                                <input type="text" class="form-control" asp-for="FullName"  id="name" placeholder="Name">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="label" for="email">Email Address</label>
-                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                                                <label class="label" asp-for="Email"></label>
+                                                <input type="email" class="form-control" asp-for="Email" id="email" placeholder="Email">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="label" for="subject">Subject</label>
-                                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+                                                <label class="label" asp-for="Subject">Subject</label>
+                                                <input type="text" class="form-control" asp-for="Subject" id="subject" placeholder="Subject">
                                             </div>
                                         </div>
                                         <div class="col-md-12 pb-2">
                                             <div class="form-group">
-                                                <label class="label" for="#">Message</label>
-                                                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
+                                                <label class="label" asp-for="UsrMessage"></label>
+                                                <textarea asp-for="UsrMessage" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
