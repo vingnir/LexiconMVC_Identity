@@ -71,6 +71,7 @@ namespace LexiconMVC_ViewModels.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
+            [Display(Name = "Birth date")]
             public string BirthDate { get; set; }
         }
 

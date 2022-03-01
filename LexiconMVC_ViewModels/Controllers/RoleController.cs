@@ -62,14 +62,5 @@ namespace LexiconMVC_ViewModels.Controllers
 
             return View();
         }
-
-
-
-
-
-
-
-
-
     }
 }

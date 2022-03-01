@@ -1,7 +1,9 @@
 ﻿using LexiconMVC_ViewModels.Models;
 using LexiconMVC_ViewModels.Models.Data;
 using LexiconMVC_ViewModels.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace LexiconMVC_ViewModels.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CityController : Controller
     {
         private ApplicationDbContext _context;
@@ -52,18 +55,47 @@ namespace LexiconMVC_ViewModels.Controllers
             return RedirectToAction(nameof(Index), "City");
         }
 
-        // GET: CityController/Details/5
-        public IActionResult Details(string CityName)
+        // GET: CityController/Edit/5
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
+            City city = _context.Cities.FirstOrDefault(x => x.CityId == id);
 
-            return View("Details", _context.Cities.Find(CityName));
+            if (city == null)
+            {
+                return RedirectToAction("Index");
+            }
 
+            CreateCityViewModel editCity = new CreateCityViewModel()
+            {
+                CityName = city.CityName
+            };
+
+            return View(editCity);
         }
 
-
-        public ActionResult Delete(string CityName)
+        // POST: CountryController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, CreateCityViewModel cityToEdit)
         {
-            var cityToDelete = _context.Cities.FirstOrDefault(x => x.CityName == CityName);
+            City city = _context.Cities.FirstOrDefault(x => x.CityId == id);
+            if (ModelState.IsValid)
+            {
+                city.CityName = cityToEdit.CityName;
+
+                _context.Entry(city).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(cityToEdit);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var cityToDelete = _context.Cities.FirstOrDefault(x => x.CityId == id);
             _context.Cities.Remove(cityToDelete);
             _context.SaveChanges();
 

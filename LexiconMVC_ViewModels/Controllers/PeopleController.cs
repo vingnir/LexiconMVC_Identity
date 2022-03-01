@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LexiconMVC_ViewModels.Controllers
 {
+    [Authorize]
     public class PeopleController : Controller
     {       
         private ApplicationDbContext _context;
@@ -29,7 +30,7 @@ namespace LexiconMVC_ViewModels.Controllers
 
         // GET: PeopleController/Create
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             CreatePersonViewModel model = new CreatePersonViewModel();

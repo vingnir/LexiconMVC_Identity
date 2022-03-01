@@ -1,6 +1,7 @@
 ﻿using LexiconMVC_ViewModels.Models;
 using LexiconMVC_ViewModels.Models.Data;
 using LexiconMVC_ViewModels.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace LexiconMVC_ViewModels.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CountryController : Controller
     {
         private ApplicationDbContext _context;
@@ -59,7 +61,44 @@ namespace LexiconMVC_ViewModels.Controllers
 
         }
 
-        
+        // GET: CountryController/Edit/5
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Country country = _context.Countries.FirstOrDefault(x => x.CountryId == id);
+
+            if (country == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            CreateCountryViewModel editCountry = new CreateCountryViewModel()
+            {
+                CountryName = country.CountryName                          
+            };
+         
+            return View(editCountry);
+        }
+
+        // POST: CountryController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, CreateCountryViewModel countryToEdit)
+        {
+            Country country = _context.Countries.FirstOrDefault(x => x.CountryId == id);
+            if (ModelState.IsValid)
+            {
+                country.CountryName = countryToEdit.CountryName;
+
+                _context.Entry(country).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(countryToEdit);
+        }
+
         public ActionResult Delete(int id)
         {
             var countryToDelete = _context.Countries.FirstOrDefault(x => x.CountryId == id);
@@ -68,20 +107,6 @@ namespace LexiconMVC_ViewModels.Controllers
 
             return RedirectToAction(nameof(Index), "Country");
         }
-
-
-        //public async Task<IActionResult> Search(string text)
-        //{
-        //    var country = from c in _context.Country
-        //                  select c;
-
-        //    if (!String.IsNullOrEmpty(text))
-        //    {
-        //        country = country.Where(cn => cn.CountryName!.Contains(text));
-        //    }
-
-        //    return View("Index", await country.ToListAsync());
-        //}
     }
 }
 

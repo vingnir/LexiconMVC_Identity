@@ -69,7 +69,7 @@ namespace LexiconMVC_ViewModels.Models.Data
             {
                 Id = roleId,
                 Name = "Admin",
-                NormalizedName = "ADMIN"
+                NormalizedName = "Admin".ToUpper()
 
             });
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
@@ -86,7 +86,7 @@ namespace LexiconMVC_ViewModels.Models.Data
             {
                 Id = userId,
                 Email = "admin@admin.com",
-                NormalizedEmail = "ADMIN@ADMIN.COM",
+                NormalizedEmail = "admin@admin.com".ToUpper(),
                 UserName = "admin@admin.com",
                 NormalizedUserName = "ADMIN@ADMIN.COM",
                 PasswordHash = hasher.HashPassword(null, "password"),
